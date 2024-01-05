@@ -1,5 +1,5 @@
+import { ViewHubConstants } from "../../constants/hubs.constants";
 import BaseHubService from "../base/BaseHubService";
-
 
 class ViewHubService extends BaseHubService {
     private constructor() {
@@ -7,19 +7,19 @@ class ViewHubService extends BaseHubService {
     }
 
     protected getHubRoute(): string {
-        return "https://localhost:7286/hubs/ViewHub"
+        return ViewHubConstants.HUB_ROUTE;
     }
 
     public onViewCountUpdate = (callBack: (value: number) => void): void => {
-        this.on("VIEW_COUNT_UPDATE", callBack);
+        this.on(ViewHubConstants.Methods.Server.VIEW_COUNT_UPDATE, callBack);
     };
 
     public async notifyWatching(): Promise<void> {
-        await this.signalRService.send("notifyWatching");
+        await this.signalRService.send(ViewHubConstants.Methods.Client.NOTIFY_WATCHING);
     }
 
     public async notifyWithArg(firstName: string, lastName: string): Promise<void> {
-        await this.signalRService.send("NotifyWithArg", firstName, lastName);
+        await this.signalRService.send(ViewHubConstants.Methods.Client.NOTIFY_WITH_ARG, firstName, lastName);
     }
 }
 

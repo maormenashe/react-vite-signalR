@@ -30,6 +30,7 @@ function App() {
       <p>
         Current view count: <span id="viewCounter">{viewCounter}</span>
       </p>
+      <div>{JSON.stringify(import.meta.env)}</div>
     </>
   );
 }
