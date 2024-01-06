@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ViewHubService from "../signalRServices/HubServices/ViewHubService";
 
 const viewHubService = ViewHubService.getInstance<ViewHubService>();

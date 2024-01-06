@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import StringToolsHubService from "../signalRServices/HubServices/StringToolsHubService";
 
 const stringToolsHubService = StringToolsHubService.getInstance<StringToolsHubService>();
