@@ -51,11 +51,20 @@ export const ViewHubPage = () => {
     };
   }, []);
 
+  const handleIncrementServerViewCountClick = async () => {
+    await viewHubService.incrementServerView();
+  };
+
   return (
     <>
       <p>
         Current view count: <span id="viewCounter">{viewCounter}</span>
       </p>
+      <div>
+        <button type="button" onClick={handleIncrementServerViewCountClick}>
+          Increment Server View Count
+        </button>
+      </div>
     </>
   );
 };

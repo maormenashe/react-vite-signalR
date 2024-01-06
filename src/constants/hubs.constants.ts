@@ -12,6 +12,7 @@ export const ViewHubConstants = {
         Client: {
             NOTIFY_WATCHING: 'notifyWatching',
             NOTIFY_WITH_ARG: 'NotifyWithArg',
+            INCREMENT_SERVER_VIEW: 'IncrementServerView',
         }
     },
 };

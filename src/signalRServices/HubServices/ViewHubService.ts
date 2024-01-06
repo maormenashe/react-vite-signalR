@@ -21,6 +21,10 @@ class ViewHubService extends BaseHubService {
     public async notifyWithArg(firstName: string, lastName: string): Promise<void> {
         await this.signalRService.send(ViewHubConstants.Methods.Client.NOTIFY_WITH_ARG, firstName, lastName);
     }
+
+    public async incrementServerView(): Promise<void> {
+        await this.signalRService.send(ViewHubConstants.Methods.Client.INCREMENT_SERVER_VIEW);
+    }
 }
 
 export default ViewHubService;
