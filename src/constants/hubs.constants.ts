@@ -15,3 +15,17 @@ export const ViewHubConstants = {
         }
     },
 };
+
+export const StringToolsHubConstants = {
+    HUB_NAME: "StringToolsHub",
+    get HUB_ROUTE() {
+        return `${BASE_HUB_ROUTE}${this.HUB_NAME}`;
+    },
+    Methods: {
+        Server: {
+        },
+        Client: {
+            GET_FULL_NAME: 'GetFullName',
+        }
+    },
+};

@@ -2,34 +2,40 @@ import * as signalR from '@microsoft/signalr';
 // import { CustomSignalRLogger } from '../../logging/CustomSignalRLogger';
 
 class SignalRService {
-    private connection: signalR.HubConnection;
+    private _connection!: signalR.HubConnection;
+    private _hubUrl: string;
 
     constructor(hubUrl: string) {
-        this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(hubUrl, {
+        this._hubUrl = hubUrl;
+        this.buildNewConnection();
+
+        // this.connection.onclose(async () => {
+        //     try {
+        //         await this.startConnection();
+        //     } catch (err) {
+        //         console.error('SignalR Connection Closed: ', err);
+        //     }
+        // });
+    }
+
+    private buildNewConnection() {
+        this._connection = new signalR.HubConnectionBuilder()
+            .withUrl(this._hubUrl, {
                 // transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.ServerSentEvents,
                 withCredentials: true,
-                accessTokenFactory: () => "test"
+                // accessTokenFactory: () => "test"
             })
             .withAutomaticReconnect()
             .configureLogging(signalR.LogLevel.Information) // Optional: Set logging level
             // .configureLogging(new CustomSignalRLogger())
             .build();
-
-        this.connection.onclose(async () => {
-            try {
-                await this.startConnection();
-            } catch (err) {
-                console.error('SignalR Connection Closed: ', err);
-            }
-        });
     }
 
     startConnection = async (onSuccess?: () => Promise<void>, onFailure?: () => Promise<void>) => {
         try {
-            if (this.connection.state === signalR.HubConnectionState.Disconnected) {
-                await this.connection.start();
-                console.log('SignalR Connected!', this.connection);
+            if (this._connection.state === signalR.HubConnectionState.Disconnected) {
+                await this._connection.start();
+                console.log('SignalR Connected!', this._connection);
                 onSuccess && await onSuccess();
             }
         } catch (err) {
@@ -40,14 +46,14 @@ class SignalRService {
     };
 
     on = (methodName: string, newMethod: (...args: unknown[]) => unknown) => {
-        this.connection.on(methodName, newMethod);
+        this._connection.on(methodName, newMethod);
     };
 
     invoke = async <T>(methodName: string, ...args: unknown[]): Promise<T> => {
         try {
-            if (this.connection.state === signalR.HubConnectionState.Connected) {
+            if (this._connection.state === signalR.HubConnectionState.Connected) {
                 console.log('Invoking method: ', methodName);
-                const reponse = await this.connection.invoke(methodName, ...args);
+                const reponse = await this._connection.invoke(methodName, ...args);
                 console.log('Method invoked: ', methodName);
                 return reponse;
             } else {
@@ -61,9 +67,9 @@ class SignalRService {
 
     send = async (methodName: string, ...args: unknown[]) => {
         try {
-            if (this.connection.state === signalR.HubConnectionState.Connected) {
+            if (this._connection.state === signalR.HubConnectionState.Connected) {
                 console.log('Sending method: ', methodName);
-                await this.connection.send(methodName, ...args);
+                await this._connection.send(methodName, ...args);
                 console.log('Method sent: ', methodName);
             } else {
                 throw new Error('SignalR is not connected');
@@ -76,15 +82,28 @@ class SignalRService {
 
     stopConnection = async () => {
         try {
-            if (this.connection.state === signalR.HubConnectionState.Connected) {
-                await this.connection.stop();
+            if (this._connection.state === signalR.HubConnectionState.Connected) {
+                await this._connection.stop();
                 console.log('SignalR Connection Stopped');
+                this.buildNewConnection();
             }
         } catch (err) {
             console.error('Error stopping connection:', err);
             throw err;
         }
     };
+
+    onClose = async (callback: (error?: Error) => void) => {
+        this._connection.onclose(callback);
+    }
+
+    onReconnecting = async (callback: (error?: Error) => void) => {
+        this._connection.onreconnecting(callback);
+    }
+
+    onReconnected = async (callback: (connectionId?: string) => void) => {
+        this._connection.onreconnected(callback);
+    }
 }
 
 export default SignalRService;

@@ -37,6 +37,18 @@ class BaseHubService {
     protected on = (methodName: string, newMethod: unknown) => {
         this.signalRService.on(methodName, newMethod as (...args: unknown[]) => unknown);
     };
+
+    onClose = async (callback: (error?: Error) => void) => {
+        this.signalRService.onClose(callback);
+    }
+
+    onReconnecting = async (callback: (error?: Error) => void) => {
+        this.signalRService.onReconnecting(callback);
+    }
+
+    onReconnected = async (callback: (connectionId?: string) => void) => {
+        this.signalRService.onReconnected(callback);
+    }
 }
 
 export default BaseHubService;
