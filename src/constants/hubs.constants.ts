@@ -30,3 +30,18 @@ export const StringToolsHubConstants = {
         }
     },
 };
+
+export const VoteHubConstants = {
+    HUB_NAME: "VoteHub",
+    get HUB_ROUTE() {
+        return `${BASE_HUB_ROUTE}${this.HUB_NAME}`;
+    },
+    Methods: {
+        Server: {
+            UPDATE_VOTES: "UPDATE_VOTES",
+        },
+        Client: {
+            GET_CURRENT_VOTES: "GetCurrentVotes"
+        }
+    },
+};
