@@ -49,6 +49,15 @@ class SignalRService {
         this._connection.on(methodName, newMethod);
     };
 
+    off = (methodName: string, method?: (...args: unknown[]) => unknown) => {
+        if (method) {
+            this._connection.off(methodName, method);
+            return;
+        }
+
+        this._connection.off(methodName);
+    }
+
     invoke = async <T>(methodName: string, ...args: unknown[]): Promise<T> => {
         try {
             if (this._connection.state === signalR.HubConnectionState.Connected) {

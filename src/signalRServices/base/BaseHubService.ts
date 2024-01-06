@@ -38,6 +38,10 @@ class BaseHubService {
         this.signalRService.on(methodName, newMethod as (...args: unknown[]) => unknown);
     };
 
+    protected off = (methodName: string, method?: (...args: unknown[]) => unknown) => {
+        this.signalRService.off(methodName, method);
+    };
+
     onClose = async (callback: (error?: Error) => void) => {
         this.signalRService.onClose(callback);
     }

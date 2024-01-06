@@ -8,7 +8,15 @@ export const ViewHubPage = () => {
 
   useEffect(() => {
     const onServerMethodsCalled = () => {
-      viewHubService.onViewCountUpdate(setViewCounter);
+      const handleViewCountUpdate = (viewCount: number) => {
+        if (viewCount % 10 === 0) {
+          viewHubService.offViewCountUpdate();
+        }
+
+        setViewCounter(viewCount);
+      };
+
+      viewHubService.onViewCountUpdate(handleViewCountUpdate);
     };
 
     const onClientEvents = () => {

@@ -14,6 +14,10 @@ class ViewHubService extends BaseHubService {
         this.on(ViewHubConstants.Methods.Server.VIEW_COUNT_UPDATE, callBack);
     };
 
+    public offViewCountUpdate = () => {
+        this.off(ViewHubConstants.Methods.Server.VIEW_COUNT_UPDATE);
+    }
+
     public async notifyWatching(): Promise<void> {
         await this.signalRService.send(ViewHubConstants.Methods.Client.NOTIFY_WATCHING);
     }
