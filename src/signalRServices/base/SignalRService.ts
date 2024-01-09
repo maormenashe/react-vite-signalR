@@ -1,5 +1,6 @@
 import * as signalR from '@microsoft/signalr';
-// import { CustomSignalRLogger } from '../../logging/CustomSignalRLogger';
+//import { CustomSignalRLogger } from '../logging/CustomSignalRLogger';
+// import { CustomRetryPolicy } from '../reconnection/CustomRetryPolicy';
 
 class SignalRService {
     private _connection!: signalR.HubConnection;
@@ -26,6 +27,7 @@ class SignalRService {
                 // accessTokenFactory: () => "test"
             })
             .withAutomaticReconnect()
+            //.withAutomaticReconnect(new CustomRetryPolicy())
             .configureLogging(signalR.LogLevel.Information) // Optional: Set logging level
             // .configureLogging(new CustomSignalRLogger())
             .build();
