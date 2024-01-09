@@ -17,6 +17,20 @@ export const ViewHubConstants = {
     },
 };
 
+export const ConnectionHubConstants = {
+    HUB_NAME: "ConnectionHub",
+    get HUB_ROUTE() {
+        return `${BASE_HUB_ROUTE}${this.HUB_NAME}`;
+    },
+    Methods: {
+        Server: {
+            CONNECTION_COUNT_UPDATE: "CONNECTION_COUNT_UPDATE",
+        },
+        Client: {
+        }
+    },
+};
+
 export const StringToolsHubConstants = {
     HUB_NAME: "StringToolsHub",
     get HUB_ROUTE() {
