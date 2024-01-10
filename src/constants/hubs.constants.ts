@@ -24,7 +24,7 @@ export const ConnectionHubConstants = {
     },
     Methods: {
         Server: {
-            CONNECTION_COUNT_UPDATE: "CONNECTION_COUNT_UPDATE",
+            CONNECTION_COUNT_UPDATE: "ConnectionCountUpdate",
         },
         Client: {
         }
