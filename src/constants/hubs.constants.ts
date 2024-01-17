@@ -1,5 +1,20 @@
 export const BASE_HUB_ROUTE: string = `${import.meta.env.VITE_HUBS_BASE_URL}/hubs/`;
 
+
+export const GameHubConstants = {
+    HUB_NAME: "GameHub",
+    get HUB_ROUTE() {
+        return `${BASE_HUB_ROUTE}${this.HUB_NAME}`;
+    },
+    Methods: {
+        Server: {
+            TICK: "TICK",
+        },
+        Client: {
+        }
+    },
+};
+
 export const ViewHubConstants = {
     HUB_NAME: "ViewHub",
     get HUB_ROUTE() {

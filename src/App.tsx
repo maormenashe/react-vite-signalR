@@ -4,8 +4,10 @@ import { ViewHubPage } from "./pages/ViewHubPage";
 import { StringToolsHubPage } from "./pages/StringToolsHubPage";
 import { VoteHubPage } from "./pages/VoteHubPage";
 import { ConnectionHubPage } from "./pages/ConnectionHubPage";
+import { GameHubPage } from "./pages/GameHubPage";
 
 enum PageEnum {
+  GameHubPage,
   ViewHubPage,
   StringToolsHub,
   VoteHubPage,
@@ -17,6 +19,9 @@ function App() {
 
   return (
     <>
+      <button type="button" onClick={() => setTargetPage(PageEnum.GameHubPage)}>
+        GameHubPage
+      </button>
       <button type="button" onClick={() => setTargetPage(PageEnum.ViewHubPage)}>
         ViewHubPage
       </button>
@@ -29,6 +34,7 @@ function App() {
       <button type="button" onClick={() => setTargetPage(PageEnum.ConnectionHubPage)}>
         ConnectionHubPage
       </button>
+      {targetPage === PageEnum.GameHubPage && <GameHubPage />}
       {targetPage === PageEnum.ViewHubPage && <ViewHubPage />}
       {targetPage === PageEnum.StringToolsHub && <StringToolsHubPage />}
       {targetPage === PageEnum.VoteHubPage && <VoteHubPage />}
