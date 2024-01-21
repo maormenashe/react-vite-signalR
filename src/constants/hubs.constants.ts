@@ -9,8 +9,11 @@ export const GameHubConstants = {
     Methods: {
         Server: {
             TICK: "TICK",
+            QUEUE_JOINED: "QUEUE_JOINED",
+            UPDATE_QUEUE: "UPDATE_QUEUE",
         },
         Client: {
+            JOIN_QUEUE: 'joinQueue',
         }
     },
 };

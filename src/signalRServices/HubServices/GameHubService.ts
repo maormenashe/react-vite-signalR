@@ -10,8 +10,20 @@ class GameHubService extends BaseHubService {
         return GameHubConstants.HUB_ROUTE;
     }
 
+    public async joinQueue(): Promise<void> {
+        await this.signalRService.send(GameHubConstants.Methods.Client.JOIN_QUEUE);
+    }
+
     public onTickUpdate = (callBack: (value: number) => void): void => {
         this.on(GameHubConstants.Methods.Server.TICK, callBack);
+    };
+
+    public onQueueJoined = (callBack: () => void): void => {
+        this.on(GameHubConstants.Methods.Server.QUEUE_JOINED, callBack);
+    };
+
+    public onUpdateQueue = (callBack: (value: number) => void): void => {
+        this.on(GameHubConstants.Methods.Server.UPDATE_QUEUE, callBack);
     };
 }
 
