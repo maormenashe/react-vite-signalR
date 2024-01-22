@@ -1,18 +1,31 @@
 import { useEffect, useState } from "react";
 import GameHubService from "../signalRServices/HubServices/GameHubService";
 
+enum PlayerActivity {
+  None,
+  InQueue,
+  InGame,
+}
+
 const gameHubService = GameHubService.getInstance<GameHubService>();
 
 export const GameHubPage = () => {
   const [tick, setTick] = useState(0);
-  const [isInQueue, setIsInQueue] = useState(false);
+  const [isPlayerActivity, setPlayerActivity] = useState(PlayerActivity.None);
+  const isInQueue = isPlayerActivity === PlayerActivity.InQueue;
+  const isInGame = isPlayerActivity === PlayerActivity.InGame;
   const [queueCount, setQueueCount] = useState(0);
 
   useEffect(() => {
     const onServerMethodsCalled = () => {
       gameHubService.onTickUpdate(setTick);
-      gameHubService.onQueueJoined(() => setIsInQueue(true));
+      gameHubService.onQueueJoined(() => setPlayerActivity(PlayerActivity.InQueue));
       gameHubService.onUpdateQueue(setQueueCount);
+      gameHubService.onGameStart((data) => {
+        console.log("Game Started", data);
+        setPlayerActivity(PlayerActivity.InGame);
+        setQueueCount(0);
+      });
     };
 
     const onClientEvents = () => {
@@ -62,7 +75,7 @@ export const GameHubPage = () => {
       <p style={{ margin: "3rem" }}>
         Tick: <span id="tick">{tick}</span>
       </p>
-      {!isInQueue && (
+      {!isInGame && !isInQueue && (
         <div>
           <button onClick={handleJoinQueue} type="button" style={{ color: "green", padding: "1rem" }}>
             Join Queue
@@ -70,7 +83,8 @@ export const GameHubPage = () => {
         </div>
       )}
       {isInQueue && <p style={{ color: "green", margin: "3rem" }}>In Queue</p>}
-      <p style={{ color: "yellow", margin: "3rem" }}>Queue Count: {queueCount}</p>
+      {isInQueue && <p style={{ color: "yellow", margin: "3rem" }}>Queue Count: {queueCount}</p>}
+      {isInGame && <p style={{ color: "blueviolet", margin: "3rem" }}>In Game</p>}
     </>
   );
 };

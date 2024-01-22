@@ -11,6 +11,7 @@ export const GameHubConstants = {
             TICK: "TICK",
             QUEUE_JOINED: "QUEUE_JOINED",
             UPDATE_QUEUE: "UPDATE_QUEUE",
+            GAME_START: "GAME_START",
         },
         Client: {
             JOIN_QUEUE: 'joinQueue',

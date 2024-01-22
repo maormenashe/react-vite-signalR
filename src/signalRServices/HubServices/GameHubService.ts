@@ -25,6 +25,10 @@ class GameHubService extends BaseHubService {
     public onUpdateQueue = (callBack: (value: number) => void): void => {
         this.on(GameHubConstants.Methods.Server.UPDATE_QUEUE, callBack);
     };
+
+    public onGameStart = (callBack: (value: unknown) => void): void => {
+        this.on(GameHubConstants.Methods.Server.GAME_START, callBack);
+    };
 }
 
 export default GameHubService;
