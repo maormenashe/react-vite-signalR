@@ -1,3 +1,4 @@
+import { Player, TurnMove } from "../../HubModels/GameHub/GameHubTypes";
 import { GameHubConstants } from "../../constants/hubs.constants";
 import BaseHubService from "../base/BaseHubService";
 
@@ -14,6 +15,10 @@ class GameHubService extends BaseHubService {
         await this.signalRService.send(GameHubConstants.Methods.Client.JOIN_QUEUE);
     }
 
+    public async makeTurnMove(shape: string): Promise<void> {
+        await this.signalRService.send(GameHubConstants.Methods.Client.MAKE_TURN_MOVE, shape);
+    }
+
     public onTickUpdate = (callBack: (value: number) => void): void => {
         this.on(GameHubConstants.Methods.Server.TICK, callBack);
     };
@@ -26,8 +31,16 @@ class GameHubService extends BaseHubService {
         this.on(GameHubConstants.Methods.Server.UPDATE_QUEUE, callBack);
     };
 
-    public onGameStart = (callBack: (value: unknown) => void): void => {
+    public onGameStart = (callBack: (player: Player) => void): void => {
         this.on(GameHubConstants.Methods.Server.GAME_START, callBack);
+    };
+
+    public onTurnChange = (callBack: (player: Player) => void): void => {
+        this.on(GameHubConstants.Methods.Server.TURN_CHANGE, callBack);
+    };
+
+    public onTurnMove = (callBack: (turnMove: TurnMove, currentTurnPlayer: Player) => void): void => {
+        this.on(GameHubConstants.Methods.Server.TURN_MOVE, callBack);
     };
 }
 

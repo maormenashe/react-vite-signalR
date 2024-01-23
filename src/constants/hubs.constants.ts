@@ -12,9 +12,12 @@ export const GameHubConstants = {
             QUEUE_JOINED: "QUEUE_JOINED",
             UPDATE_QUEUE: "UPDATE_QUEUE",
             GAME_START: "GAME_START",
+            TURN_CHANGE: "TURN_CHANGE",
+            TURN_MOVE: "TURN_MOVE",
         },
         Client: {
             JOIN_QUEUE: 'joinQueue',
+            MAKE_TURN_MOVE: 'makeTurnMove',
         }
     },
 };

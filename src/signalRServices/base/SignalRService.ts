@@ -6,6 +6,11 @@ class SignalRService {
     private _connection!: signalR.HubConnection;
     private _hubUrl: string;
 
+    get connectionId(): string | null {
+        if (this._connection) return this._connection.connectionId;
+        return null;
+    }
+
     constructor(hubUrl: string) {
         this._hubUrl = hubUrl;
         this.buildNewConnection();

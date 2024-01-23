@@ -5,6 +5,10 @@ class BaseHubService {
     protected signalRService: SignalRService;
     protected randomNum: number;
 
+    get connectionId(): string | null {
+        return this.signalRService.connectionId;
+    }
+
     protected constructor() {
         if (BaseHubService._instance) {
             throw new Error('Cannot instantiate a singleton class');
