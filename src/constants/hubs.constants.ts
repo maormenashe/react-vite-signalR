@@ -22,6 +22,27 @@ export const GameHubConstants = {
     },
 };
 
+
+export const RPSGameHubConstants = {
+    HUB_NAME: "RPSGameHub",
+    get HUB_ROUTE() {
+        return `${BASE_HUB_ROUTE}${this.HUB_NAME}`;
+    },
+    Methods: {
+        Server: {
+            TICK: "TICK",
+            QUEUE_JOINED: "QUEUE_JOINED",
+            UPDATE_QUEUE: "UPDATE_QUEUE",
+            GAME_START: "GAME_START",
+            ROUND_CONCLUSION: "ROUND_CONCLUSION",
+        },
+        Client: {
+            JOIN_QUEUE: 'joinQueue',
+            MAKE_ROUND_MOVE: 'makeRoundMove',
+        }
+    },
+};
+
 export const ViewHubConstants = {
     HUB_NAME: "ViewHub",
     get HUB_ROUTE() {
