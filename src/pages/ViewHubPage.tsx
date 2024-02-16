@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ViewHubService from "../signalRServices/HubServices/ViewHubService";
+import { viewHubChannel } from "../event-bus/channels/view-hub.channel";
 
 const viewHubService = ViewHubService.getInstance<ViewHubService>();
 
@@ -14,6 +15,7 @@ export const ViewHubPage = () => {
         }
 
         setViewCounter(viewCount);
+        viewHubChannel.emit("onViewCountUpdate", viewCount);
       };
 
       viewHubService.onViewCountUpdate(handleViewCountUpdate);
@@ -73,6 +75,20 @@ export const ViewHubPage = () => {
           Increment Server View Count
         </button>
       </div>
+      <ViewHubChannelTester />
     </>
   );
+};
+
+export const ViewHubChannelTester = () => {
+  const [viewCount, setViewCount] = useState(0);
+
+  useEffect(() => {
+    const unsubscribeOnViewCountUpdate = viewHubChannel.on("onViewCountUpdate", setViewCount);
+
+    return () => {
+      unsubscribeOnViewCountUpdate();
+    };
+  }, []);
+  return <div>View count: {viewCount}</div>;
 };

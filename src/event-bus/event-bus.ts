@@ -58,8 +58,3 @@ export function eventbus<E extends EventMap>(config?: EventBusConfig): EventBus<
 
   return { on, off, once, emit };
 }
-
-export const mapEventChannel = eventbus<{
-  onMapIdle: () => void;
-  onMapClick: (payload: number) => void;
-}>();
